@@ -157,8 +157,7 @@ tbody {
   border-top: 3px solid var(--primary-low);
 }
 
-.topic-list-item,
-tr {
+tbody tr {
   border-bottom: 1px solid var(--primary-low);
 
   @media (prefers-reduced-motion: no-preference) {
