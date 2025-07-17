@@ -79,8 +79,8 @@ class CurrentUserSerializer < BasicUserSerializer
              :use_glimmer_post_stream_mode_auto_mode,
              :can_localize_content?,
              :effective_locale,
-             :use_reviewable_ui_refresh
-  :can_see_ip
+             :use_reviewable_ui_refresh,
+             :can_see_ip
 
   delegate :user_stat, to: :object, private: true
   delegate :any_posts, :draft_count, :pending_posts_count, :read_faq?, to: :user_stat
