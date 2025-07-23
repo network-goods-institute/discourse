@@ -27,9 +27,9 @@ RSpec.describe LocaleSiteSetting do
     end
 
     it "returns native names" do
-      expect(native_locale_name("de")).to eq("Deutsch")
-      expect(native_locale_name("zh_CN")).to eq("简体中文")
-      expect(native_locale_name("zh_TW")).to eq("繁體中文")
+      expect(native_locale_name("de")).to eq("German (Deutsch)")
+      expect(native_locale_name("zh_CN")).to eq("Chinese Simplified (简体中文)")
+      expect(native_locale_name("zh_TW")).to eq("Chinese (繁體中文)")
     end
   end
 
@@ -79,7 +79,7 @@ RSpec.describe LocaleSiteSetting do
       end
 
       it "does not allow plugins to override native names that exist in core" do
-        expect(native_locale_name("de")).to eq("Deutsch")
+        expect(native_locale_name("de")).to eq("German (Deutsch)")
       end
 
       it "returns the language code when no nativeName is set" do
@@ -120,7 +120,7 @@ RSpec.describe LocaleSiteSetting do
   describe ".get_language_name" do
     it "returns the language name for a valid locale" do
       expect(LocaleSiteSetting.get_language_name("en")).to eq("English (US)")
-      expect(LocaleSiteSetting.get_language_name("es")).to eq("Español")
+      expect(LocaleSiteSetting.get_language_name("es")).to eq("Spanish (Español)")
     end
 
     it "returns nil for a locale that doesn't exist" do
