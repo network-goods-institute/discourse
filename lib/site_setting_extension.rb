@@ -141,6 +141,10 @@ module SiteSettingExtension
     @secret_settings ||= Set.new
   end
 
+  def i18n_dependent_choices
+    @i18n_dependent_choices ||= {}
+  end
+
   def plugins
     @plugins ||= {}
   end
@@ -725,6 +729,12 @@ module SiteSettingExtension
     Set.new(SiteSetting::VALID_AREAS | DiscoursePluginRegistry.site_setting_areas.to_a)
   end
 
+  def load_i18n_choices!
+    i18n_dependent_choices.each do |setting_name, proc|
+      type_supervisor.load_setting(setting_name, proc)
+    end
+  end
+
   protected
 
   def clear_cache!(expire_theme_site_setting_cache: false)
@@ -963,11 +973,12 @@ module SiteSettingExtension
 
       plugins[name] = opts[:plugin] if opts[:plugin]
 
+      choices_opts = opts.extract!(*SiteSettings::TypeSupervisor::CONSUMED_OPTS)
+
       if !opts[:i18n_dependent_choices]
-        type_supervisor.load_setting(
-          name,
-          opts.extract!(*SiteSettings::TypeSupervisor::CONSUMED_OPTS),
-        )
+        type_supervisor.load_setting(name, choices_opts)
+      else
+        i18n_dependent_choices[name] = choices_opts
       end
 
       if !shadowed_val.nil?

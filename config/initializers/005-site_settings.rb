@@ -28,3 +28,8 @@ Rails.application.config.to_prepare do
     end
   end
 end
+
+Rails.application.config.after_initialize do
+  # Force regeneration with I18n loaded
+  SiteSetting.load_i18n_choices!
+end
