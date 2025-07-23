@@ -203,9 +203,9 @@
       position: relative;
       background-color: var(--secondary);
       cursor: default;
-      border-top: 1px solid var(--primary-low);
-      border-left: 1px solid var(--primary-low);
-      border-right: 1px solid var(--primary-low);
+      border-top: 1px solid var(--content-border-color);
+      border-left: 1px solid var(--content-border-color);
+      border-right: 1px solid var(--content-border-color);
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
 
@@ -465,7 +465,7 @@ $mobile-avatar-height: 1.532em;
 
   .trigger-group-card {
     padding: 0 5px;
-    border: 1px solid var(--primary-low);
+    border: 1px solid var(--content-border-color);
     border-radius: 0.25em;
     min-width: 3em;
 
