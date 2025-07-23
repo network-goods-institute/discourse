@@ -963,10 +963,12 @@ module SiteSettingExtension
 
       plugins[name] = opts[:plugin] if opts[:plugin]
 
-      type_supervisor.load_setting(
-        name,
-        opts.extract!(*SiteSettings::TypeSupervisor::CONSUMED_OPTS),
-      )
+      if !opts[:i18n_dependent_choices]
+        type_supervisor.load_setting(
+          name,
+          opts.extract!(*SiteSettings::TypeSupervisor::CONSUMED_OPTS),
+        )
+      end
 
       if !shadowed_val.nil?
         setup_shadowed_methods(name, shadowed_val)

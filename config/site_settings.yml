@@ -1640,6 +1640,7 @@ content_localization:
     list_type: named
     allow_any: false
     choices: "LocaleSiteSetting.values"
+    i18n_dependent_choices: true
     area: "localization"
     validator: "ContentLocalizationLocalesValidator"
   content_localization_max_locales:

@@ -8,8 +8,20 @@ class LocaleSiteSetting < EnumSiteSetting
   def self.values
     @values ||=
       supported_locales.map do |locale|
-        lang = language_names[locale] || language_names[locale.split("_")[0]]
-        { name: lang ? lang["nativeName"] : locale, value: locale }
+        lang = language_names[locale] || language_names[locale.split("_").first]
+        native_name = lang&.dig("nativeName").to_s
+
+        localized_key = "languages.#{locale}.name"
+        localized_name = I18n.exists?(localized_key) ? I18n.t(localized_key) : nil
+
+        name =
+          if localized_name.blank? || localized_name == native_name
+            native_name.presence || locale
+          else
+            "#{localized_name} (#{native_name})"
+          end
+
+        { name:, value: locale }
       end
   end
 
@@ -21,6 +33,11 @@ class LocaleSiteSetting < EnumSiteSetting
     @lock.synchronize do
       @language_names ||=
         begin
+          # the following gives us the names of languages in the format:
+          # {
+          #   "en" => { "nativeName" => "English (US)" },
+          #   "ja" => { "nativeName" => "日本語"},
+          # }
           names = YAML.safe_load(File.read(File.join(Rails.root, "config", "locales", "names.yml")))
 
           DiscoursePluginRegistry.locales.each do |locale, options|
