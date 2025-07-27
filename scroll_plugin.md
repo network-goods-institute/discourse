@@ -24,15 +24,27 @@
        const topicBody = post1.querySelector('.topic-body');
        
        if (topicBody) {
-         // Check if iframe already exists to avoid duplicates
          if (topicBody.querySelector('.custom-iframe-container')) {
            return true;
          }
          
          const iframeContainer = document.createElement('div');
-         iframeContainer.className = 'custom-iframe-container';
          iframeContainer.style.cssText = 'margin: 20px 0; border: 1px solid #ddd; border-radius: 5px; padding: 10px; background: white;';
-         iframeContainer.innerHTML = '<iframe src="http://localhost:3001/embed/source" width="100%" height="600" frameborder="0" referrerpolicy="unsafe-url" title="Negation-Game Source Embed"></iframe>';
+         const postContent = post1.querySelector('.cooked');
+         let sourceParam = '';
+         
+         if (postContent) {
+           const links = postContent.querySelectorAll('a[href*="rationale"]');
+           if (links.length > 0) {
+             sourceParam = '?source=' + encodeURIComponent(links[0].href);
+           } else {
+             sourceParam = '?source=' + encodeURIComponent(window.location.href);
+           }
+         } else {
+           sourceParam = '?source=' + encodeURIComponent(window.location.href);
+         }
+         
+         iframeContainer.innerHTML = '<iframe src="http://localhost:3001/embed/source' + sourceParam + '" width="100%" height="600" frameborder="0" referrerpolicy="unsafe-url" title="Negation-Game Source Embed"></iframe>';
          topicBody.appendChild(iframeContainer);
          return true;
        }
