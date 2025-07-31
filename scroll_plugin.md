@@ -44,7 +44,7 @@
            sourceParam = '?source=' + encodeURIComponent(window.location.href);
          }
          
-         iframeContainer.innerHTML = '<iframe src="http://localhost:3001/embed/source' + sourceParam + '" width="100%" height="600" frameborder="0" referrerpolicy="unsafe-url" title="Negation-Game Source Embed"></iframe>';
+         iframeContainer.innerHTML = '<iframe src="http://localhost:3001/embed/source' + sourceParam + '" width="100%" height="460" frameborder="0" referrerpolicy="unsafe-url" title="Negation-Game Source Embed"></iframe>';
          topicBody.appendChild(iframeContainer);
          return true;
        }
@@ -53,7 +53,6 @@
      return false;
    }
 
-   // Try immediately, then poll if needed
    if (!addIframeToPost()) {
      let attempts = 0;
      const maxAttempts = 20;
